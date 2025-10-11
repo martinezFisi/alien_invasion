@@ -6,6 +6,7 @@ from operator import methodcaller
 from settings import Settings
 from ship import Ship
 from bullet import Bullet
+from alien import Alien
 
 class AlienInvasion:
     def __init__(self):
@@ -22,9 +23,12 @@ class AlienInvasion:
         self.ship_velocity = self.settings.ship_velocity
         self.bullet_velocity = self.settings.bullet_velocity
         self.bullet_color = self.settings.bullet_color
+        self.alien_init_pos = self.settings.alien_init_pos
+        self.horizontal_distance_beetwen_aliens = self.settings.horizontal_distance_beetwen_aliens
 
         self.ship = Ship(self)
         self.bullets = []
+        self.aliens = self._create_aliens()
 
     def run_game(self):
         while True:
@@ -45,6 +49,7 @@ class AlienInvasion:
         self.screen.fill(self.background_color)
         self.ship.blitme()
         list(map(methodcaller('blitme'), self.bullets))
+        list(map(methodcaller('blitme'), self.aliens))
         pygame.display.flip() # Update the full display surface to the screen
 
     def _update_bullets(self):
@@ -54,6 +59,11 @@ class AlienInvasion:
         self.bullets.append(Bullet(self))
         print(f'Numero de bullets: {len(self.bullets)}')
 
+    def _create_aliens(self):
+        aliens = []
+        for i in range(8):
+            aliens.append(Alien(self, i))
+        return aliens
 
 if __name__ == '__main__':
     ai = AlienInvasion()
