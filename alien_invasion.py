@@ -15,18 +15,21 @@ class AlienInvasion:
         screen = pygame.display.set_mode(dimensions)
         background_color = self.settings.bg_color
         clock = pygame.time.Clock()
+        ship_velocity = self.settings.ship_velocity
 
         self._set_title(title)
         self.screen = screen
         self.background_color = background_color
         self.clock = clock
+        self.ship_velocity = ship_velocity
 
-        self.ship = Ship(self.screen)
+        self.ship = Ship(self)
 
     def run_game(self):
         while True:
 
             self._check_events()
+            self.ship.update()
             self._update_screen()
 
             self.clock.tick(self.settings.fps)  # Control the frame rate
