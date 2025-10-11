@@ -1,8 +1,11 @@
 import sys
 import pygame
 
+from operator import methodcaller
+
 from settings import Settings
 from ship import Ship
+from bullet import Bullet
 
 class AlienInvasion:
     def __init__(self):
@@ -10,41 +13,49 @@ class AlienInvasion:
         pygame.init()
 
         self.settings = Settings()
+        pygame.display.set_caption(self.settings.title)
         dimensions = (self.settings.screen_width, self.settings.screen_height)
-        title = self.settings.title
         screen = pygame.display.set_mode(dimensions)
         background_color = self.settings.bg_color
         clock = pygame.time.Clock()
         ship_velocity = self.settings.ship_velocity
 
-        self._set_title(title)
         self.screen = screen
         self.background_color = background_color
         self.clock = clock
         self.ship_velocity = ship_velocity
 
         self.ship = Ship(self)
+        self.bullets = []
 
     def run_game(self):
         while True:
 
             self._check_events()
             self.ship.update()
+            #list(map(methodcaller('update'), self.bullets))
+
+            for bullet in self.bullets:
+                bullet.update()
+
             self._update_screen()
-
             self.clock.tick(self.settings.fps)  # Control the frame rate
-
-    def _set_title(self, title):
-        pygame.display.set_caption(title)
 
     def _check_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 sys.exit()
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                self.bullets.append(Bullet(self))
+                print(f'Numero de bullets: {len(self.bullets)}')
 
     def _update_screen(self):
         self.screen.fill(self.background_color)
         self.ship.blitme()
+
+        for bullet in self.bullets:
+                bullet.blitme()
+
         pygame.display.flip() # Update the full display surface to the screen
 
 if __name__ == '__main__':
