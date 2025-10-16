@@ -3,7 +3,11 @@ import pygame
 
 class Alien:
 
+    count = 0
+
     def __init__(self, game, order):
+        Alien.count += 1
+        self.id = Alien.count
         self.game = game
         self.game_screen = game.screen
         self.game_screen_rect = game.screen.get_rect()
@@ -25,3 +29,8 @@ class Alien:
 
     def update(self):
         self.rect.y += self.vertical_velocity
+
+    def __eq__(self, other):
+        if isinstance(other, Alien):
+            return self.id == other.id
+        return False 

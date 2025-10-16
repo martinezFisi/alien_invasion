@@ -21,7 +21,6 @@ class Bullet:
         
         if self.rect.y < 0:
             self.game.bullets.remove(self)
-            print(f'Nuevo numero de bullets: {len(self.game.bullets)}')
 
     def __eq__(self, other):
         if isinstance(other, Bullet):

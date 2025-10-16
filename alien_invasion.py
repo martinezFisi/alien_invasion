@@ -40,6 +40,7 @@ class AlienInvasion:
             self.ship.update()
             self._update_bullets()
             self._update_aliens()
+            self._check_collisions()
             self._update_screen()
             self.clock.tick(self.settings.fps)  # Control the frame rate
 
@@ -72,6 +73,16 @@ class AlienInvasion:
     
     def _update_aliens(self):
         list(map(methodcaller('update'), self.aliens))
+    
+    def _check_collisions(self):
+        for alien in self.aliens[:]:
+            for bullet in self.bullets[:]:
+                if bullet.rect.colliderect(alien.rect):
+                    self.aliens.remove(alien)
+                    self.bullets.remove(bullet)
+            
+            if self.ship.rect.colliderect(alien.rect):
+                self.aliens.remove(alien)
 
 if __name__ == '__main__':
     ai = AlienInvasion()
