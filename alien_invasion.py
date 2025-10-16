@@ -21,10 +21,14 @@ class AlienInvasion:
         self.background_color = self.settings.bg_color
         self.clock = pygame.time.Clock()
         self.ship_velocity = self.settings.ship_velocity
+        self.alien_vertical_velocity = self.settings.alien_vertical_velocity
         self.bullet_velocity = self.settings.bullet_velocity
         self.bullet_color = self.settings.bullet_color
         self.alien_init_pos = self.settings.alien_init_pos
-        self.horizontal_distance_beetwen_aliens = self.settings.horizontal_distance_beetwen_aliens
+        self.horizontal_distance_between_aliens = self.settings.horizontal_distance_between_aliens
+        self.vertical_distance_between_aliens = self.settings.vertical_distance_between_aliens
+        self.number_of_aliens = self.settings.number_of_aliens
+        self.number_of_aliens_per_row = self.settings.number_of_aliens_per_row
 
         self.ship = Ship(self)
         self.bullets = []
@@ -35,6 +39,7 @@ class AlienInvasion:
             self._check_events()
             self.ship.update()
             self._update_bullets()
+            self._update_aliens()
             self._update_screen()
             self.clock.tick(self.settings.fps)  # Control the frame rate
 
@@ -61,9 +66,12 @@ class AlienInvasion:
 
     def _create_aliens(self):
         aliens = []
-        for i in range(8):
+        for i in range(0, self.number_of_aliens):
             aliens.append(Alien(self, i))
         return aliens
+    
+    def _update_aliens(self):
+        list(map(methodcaller('update'), self.aliens))
 
 if __name__ == '__main__':
     ai = AlienInvasion()
