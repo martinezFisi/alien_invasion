@@ -30,6 +30,9 @@ class Alien:
     def update(self):
         self.rect.y += self.vertical_velocity
 
+        if(self.rect.y + self.rect.height > self.game_screen_rect.height):#check if alien reached bottom of screen
+            self.game.aliens.remove(self)
+
     def __eq__(self, other):
         if isinstance(other, Alien):
             return self.id == other.id

@@ -9,9 +9,9 @@ class Settings:
         self.fps = 60
         self.ship_velocity = 5
         self.bullet_velocity = 5
-        self.alien_vertical_velocity = 1
+        self.alien_vertical_velocity = 0.5
         self.bullet_color = (255, 0, 0)
-        self.alien_init_pos = (120, 40)
+        self.alien_init_pos = (120, 80)
         self.horizontal_distance_between_aliens = 120
         self.vertical_distance_between_aliens = 80
         self.number_of_aliens = 24
