@@ -9,13 +9,14 @@ class Settings:
         self.fps = 60
         self.ship_velocity = 5
         self.bullet_velocity = 5
-        self.alien_vertical_velocity = 0.5
-        self.bullet_color = (255, 0, 0)
+        self.alien_vertical_velocity = 0
+        self.bullet_color = (255, 0, 0)#red
         self.alien_init_pos = (120, 80)
         self.horizontal_distance_between_aliens = 120
         self.vertical_distance_between_aliens = 80
         self.number_of_aliens = 24
         self.number_of_aliens_per_row = 8
+        self.player_lifes = 5
 
     # Tabla de cocientes y restos para números del 0 al 23 divididos entre 8:
     # Número | Cociente (//) | Resto (%)

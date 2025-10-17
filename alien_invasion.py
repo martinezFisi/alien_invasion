@@ -4,6 +4,7 @@ import pygame
 from operator import methodcaller
 
 from settings import Settings
+from game_stats import GameStats
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
@@ -29,10 +30,12 @@ class AlienInvasion:
         self.vertical_distance_between_aliens = self.settings.vertical_distance_between_aliens
         self.number_of_aliens = self.settings.number_of_aliens
         self.number_of_aliens_per_row = self.settings.number_of_aliens_per_row
+        self.player_lifes = self.settings.player_lifes
 
         self.ship = Ship(self)
         self.bullets = []
         self.aliens = self._create_aliens()
+        self.game_stats = GameStats(self)
 
     def run_game(self):
         while True:
@@ -53,6 +56,7 @@ class AlienInvasion:
 
     def _update_screen(self):
         self.screen.fill(self.background_color)
+        self.game_stats.blitme()
         self.ship.blitme()
         list(map(methodcaller('blitme'), self.bullets))
         list(map(methodcaller('blitme'), self.aliens))

@@ -21,6 +21,7 @@ class Alien:
         self.rect = self.image.get_rect()
 
         self.rect.topleft = self.init_pos
+        # Calculate init position based on order in the fleet using div and mod operations
         self.rect.x = self.rect.x + self.horizontal_distance*(self.order%self.game.number_of_aliens_per_row)
         self.rect.y = self.rect.y + self.vertical_distance*(self.order//self.game.number_of_aliens_per_row)
 
