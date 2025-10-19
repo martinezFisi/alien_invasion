@@ -84,9 +84,17 @@ class AlienInvasion:
                 if bullet.rect.colliderect(alien.rect):
                     self.aliens.remove(alien)
                     self.bullets.remove(bullet)
+                    
+                    self.game_stats.score += 10
+                    
+                    break  # Exit the inner loop to avoid checking other bullets for this alien
             
             if self.ship.rect.colliderect(alien.rect):
                 self.aliens.remove(alien)
+                
+                self.game_stats.lifes -= 1
+                if self.game_stats.lifes <= 0:
+                    print("Game Over")
 
 if __name__ == '__main__':
     ai = AlienInvasion()
