@@ -36,3 +36,8 @@ class GameStats:
 
         img2 = self.font.render(f'{self.best_history_score}', True, (255,0,0))
         self.game_screen.blit(img2, (self.game.settings.screen_width - 80, 15))
+    
+    def reset_stats(self):
+        self.best_history_score = max(self.best_history_score, self.score)
+        self.lifes = self.game.player_lifes
+        self.score = 0

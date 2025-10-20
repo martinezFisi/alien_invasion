@@ -11,7 +11,7 @@ class Settings:
         self.bullet_velocity = 5
         self.alien_vertical_velocity = 1
         self.bullet_color = (255, 0, 0)#red
-        self.alien_init_pos = (120, 80)
+        self.alien_init_pos = (120, -200)
         self.horizontal_distance_between_aliens = 120
         self.vertical_distance_between_aliens = 80
         self.number_of_aliens = 24
@@ -46,5 +46,5 @@ class Settings:
     #  22    |      2        |    6
     #  23    |      2        |    7
     #
-    # Los cocientes vienen a el numero de fila en la que debe aparecer un alien
-    # El residuo es la posicion horizontal del alien en la fila
+    # Los cocientes vienen a ser el numero de fila en la que debe aparecer un alien
+    # El residuo es la posición horizontal del alien en la fila
