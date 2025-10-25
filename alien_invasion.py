@@ -32,6 +32,8 @@ class AlienInvasion:
         self.number_of_aliens = self.settings.number_of_aliens
         self.number_of_aliens_per_row = self.settings.number_of_aliens_per_row
         self.player_lifes = self.settings.player_lifes
+        self.player_number_of_special_bullets = self.settings.player_number_of_special_bullets
+        self.special_bullet_width = self.settings.special_bullet_width
 
         self.ship = Ship(self)
         self.bullets = []
@@ -62,8 +64,13 @@ class AlienInvasion:
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 sys.exit()
             
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and self.game_is_active:
                 self._fire_bullet()
+            
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_LSHIFT and self.game_is_active and self.game_stats.player_number_of_special_bullets > 0:
+                self._fire_bullet(True)
+                self.game_stats.player_number_of_special_bullets -= 1
+
 
             # Mouse click to start the game
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -87,8 +94,8 @@ class AlienInvasion:
     def _update_bullets(self):
         list(map(methodcaller('update'), self.bullets))
 
-    def _fire_bullet(self):
-        self.bullets.append(Bullet(self))
+    def _fire_bullet(self, isSpecial=False):
+        self.bullets.append(Bullet(self, isSpecial))
         print(f'Numero de bullets: {len(self.bullets)}')
 
     def _create_aliens(self):
@@ -101,6 +108,9 @@ class AlienInvasion:
         list(map(methodcaller('update'), self.aliens))
     
     def _check_collisions(self):
+
+        specialBullet = None
+
         for alien in self.aliens[:]:
             
             # Check collision with ship
@@ -119,9 +129,17 @@ class AlienInvasion:
             for bullet in self.bullets[:]:
                 if bullet.rect.colliderect(alien.rect):
                     self.aliens.remove(alien)
-                    self.bullets.remove(bullet)
+
+                    if bullet.isSpecial:
+                        specialBullet = bullet
+                    else:
+                        self.bullets.remove(bullet)
+
                     self.game_stats.score += 10
                     break  # Exit the inner loop to avoid checking other bullets for this alien
+
+        if specialBullet:
+            self.bullets.remove(specialBullet)
             
 
     def _check_ship_lifes(self):
@@ -144,6 +162,7 @@ class AlienInvasion:
         self.ship.rect.midbottom = self.screen.get_rect().midbottom
         self.bullets.clear()
         self.aliens = self._create_aliens()
+        self.game_stats.player_number_of_special_bullets = self.settings.player_number_of_special_bullets
         pygame.time.delay(500)
 
 if __name__ == '__main__':
