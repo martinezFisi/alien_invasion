@@ -157,12 +157,14 @@ class AlienInvasion:
         self.aliens = self._create_aliens()
         self.bullets.clear()
         self.ship.rect.midbottom = self.screen.get_rect().midbottom
+        self.alien_vertical_velocity = self.settings.alien_vertical_velocity
 
     def _load_next_level(self):
         self.ship.rect.midbottom = self.screen.get_rect().midbottom
         self.bullets.clear()
         self.aliens = self._create_aliens()
         self.game_stats.player_number_of_special_bullets = self.settings.player_number_of_special_bullets
+        self.alien_vertical_velocity += 1
         pygame.time.delay(500)
 
 if __name__ == '__main__':

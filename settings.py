@@ -17,7 +17,7 @@ class Settings:
         self.number_of_aliens = 24
         self.number_of_aliens_per_row = 8
         self.player_lifes = 5
-        self.player_number_of_special_bullets = 3
+        self.player_number_of_special_bullets = 5
         self.special_bullet_width = 250
 
     # Tabla de cocientes y restos para números del 0 al 23 divididos entre 8:
